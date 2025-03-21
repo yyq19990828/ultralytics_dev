@@ -16,7 +16,7 @@ The [Caltech-256](https://data.caltech.edu/records/nyy15-4j048) dataset is an ex
     allowfullscreen>
   </iframe>
   <br>
-  <strong>Watch:</strong> How to Train Image Classification Model using Caltech-256 Dataset with Ultralytics HUB
+  <strong>Watch:</strong> How to Train <a href="https://www.ultralytics.com/glossary/image-classification">Image Classification</a> Model using Caltech-256 Dataset with Ultralytics HUB
 </p>
 
 ## Key Features
@@ -29,15 +29,15 @@ The [Caltech-256](https://data.caltech.edu/records/nyy15-4j048) dataset is an ex
 
 ## Dataset Structure
 
-Like Caltech-101, the Caltech-256 dataset does not have a formal split between training and testing sets. Users typically create their own splits according to their specific needs. A common practice is to use a random subset of images for training and the remaining images for testing.
+Like [Caltech-101](../classify/caltech101.md), the Caltech-256 dataset does not have a formal split between training and testing sets. Users typically create their own splits according to their specific needs. A common practice is to use a random subset of images for training and the remaining images for testing.
 
 ## Applications
 
-The Caltech-256 dataset is extensively used for training and evaluating deep learning models in object recognition tasks, such as Convolutional Neural Networks (CNNs), Support Vector Machines (SVMs), and various other machine learning algorithms. Its diverse set of categories and high-quality images make it an invaluable dataset for research and development in the field of machine learning and computer vision.
+The Caltech-256 dataset is extensively used for training and evaluating [deep learning](https://www.ultralytics.com/glossary/deep-learning-dl) models in object recognition tasks, such as [Convolutional Neural Networks](https://www.ultralytics.com/glossary/convolutional-neural-network-cnn) (CNNs), [Support Vector Machines](https://www.ultralytics.com/glossary/support-vector-machine-svm) (SVMs), and various other machine learning algorithms. Its diverse set of categories and high-quality images make it an invaluable dataset for research and development in the field of machine learning and [computer vision](https://www.ultralytics.com/glossary/computer-vision-cv).
 
 ## Usage
 
-To train a YOLO model on the Caltech-256 dataset for 100 epochs, you can use the following code snippets. For a comprehensive list of available arguments, refer to the model [Training](../../modes/train.md) page.
+To train a YOLO model on the Caltech-256 dataset for 100 [epochs](https://www.ultralytics.com/glossary/epoch), you can use the following code snippets. For a comprehensive list of available arguments, refer to the model [Training](../../modes/train.md) page.
 
 !!! example "Train Example"
 
@@ -47,7 +47,7 @@ To train a YOLO model on the Caltech-256 dataset for 100 epochs, you can use the
         from ultralytics import YOLO
 
         # Load a model
-        model = YOLO("yolov8n-cls.pt")  # load a pretrained model (recommended for training)
+        model = YOLO("yolo11n-cls.pt")  # load a pretrained model (recommended for training)
 
         # Train the model
         results = model.train(data="caltech256", epochs=100, imgsz=416)
@@ -57,7 +57,7 @@ To train a YOLO model on the Caltech-256 dataset for 100 epochs, you can use the
 
         ```bash
         # Start training from a pretrained *.pt model
-        yolo classify train data=caltech256 model=yolov8n-cls.pt epochs=100 imgsz=416
+        yolo classify train data=caltech256 model=yolo11n-cls.pt epochs=100 imgsz=416
         ```
 
 ## Sample Images and Annotations
@@ -84,9 +84,7 @@ If you use the Caltech-256 dataset in your research or development work, please 
         }
         ```
 
-We would like to acknowledge Gregory Griffin, Alex Holub, and Pietro Perona for creating and maintaining the Caltech-256 dataset as a valuable resource for the machine learning and computer vision research community. For more information about the
-
-Caltech-256 dataset and its creators, visit the [Caltech-256 dataset website](https://data.caltech.edu/records/nyy15-4j048).
+We would like to acknowledge Gregory Griffin, Alex Holub, and Pietro Perona for creating and maintaining the Caltech-256 dataset as a valuable resource for the [machine learning](https://www.ultralytics.com/glossary/machine-learning-ml) and computer vision research community. For more information about the Caltech-256 dataset and its creators, visit the [Caltech-256 dataset website](https://data.caltech.edu/records/nyy15-4j048).
 
 ## FAQ
 
@@ -96,7 +94,7 @@ The [Caltech-256](https://data.caltech.edu/records/nyy15-4j048) dataset is a lar
 
 ### How can I train a YOLO model on the Caltech-256 dataset using Python or CLI?
 
-To train a YOLO model on the Caltech-256 dataset for 100 epochs, you can use the following code snippets. Refer to the model [Training](../../modes/train.md) page for additional options.
+To train a YOLO model on the Caltech-256 dataset for 100 [epochs](https://www.ultralytics.com/glossary/epoch), you can use the following code snippets. Refer to the model [Training](../../modes/train.md) page for additional options.
 
 !!! example "Train Example"
 
@@ -106,7 +104,7 @@ To train a YOLO model on the Caltech-256 dataset for 100 epochs, you can use the
         from ultralytics import YOLO
 
         # Load a model
-        model = YOLO("yolov8n-cls.pt")  # load a pretrained model
+        model = YOLO("yolo11n-cls.pt")  # load a pretrained model
 
         # Train the model
         results = model.train(data="caltech256", epochs=100, imgsz=416)
@@ -116,17 +114,17 @@ To train a YOLO model on the Caltech-256 dataset for 100 epochs, you can use the
 
         ```bash
         # Start training from a pretrained *.pt model
-        yolo classify train data=caltech256 model=yolov8n-cls.pt epochs=100 imgsz=416
+        yolo classify train data=caltech256 model=yolo11n-cls.pt epochs=100 imgsz=416
         ```
 
 ### What are the most common use cases for the Caltech-256 dataset?
 
 The Caltech-256 dataset is widely used for various object recognition tasks such as:
 
-- Training Convolutional Neural Networks (CNNs)
+- Training Convolutional [Neural Networks](https://www.ultralytics.com/glossary/neural-network-nn) (CNNs)
 - Evaluating the performance of Support Vector Machines (SVMs)
 - Benchmarking new deep learning algorithms
-- Developing object detection models using frameworks like Ultralytics YOLO
+- Developing [object detection](https://www.ultralytics.com/glossary/object-detection) models using frameworks like Ultralytics YOLO
 
 Its diversity and comprehensive annotations make it ideal for research and development in machine learning and computer vision.
 
@@ -140,7 +138,7 @@ Ultralytics YOLO models offer several advantages for training on the Caltech-256
 
 - **High Accuracy**: YOLO models are known for their state-of-the-art performance in object detection tasks.
 - **Speed**: They provide real-time inference capabilities, making them suitable for applications requiring quick predictions.
-- **Ease of Use**: With Ultralytics HUB, users can train, validate, and deploy models without extensive coding.
-- **Pretrained Models**: Starting from pretrained models, like `yolov8n-cls.pt`, can significantly reduce training time and improve model accuracy.
+- **Ease of Use**: With [Ultralytics HUB](https://www.ultralytics.com/hub), users can train, validate, and deploy models without extensive coding.
+- **Pretrained Models**: Starting from pretrained models, like `yolo11n-cls.pt`, can significantly reduce training time and improve model [accuracy](https://www.ultralytics.com/glossary/accuracy).
 
-For more details, explore our [comprehensive training guide](../../modes/train.md).
+For more details, explore our [comprehensive training guide](../../modes/train.md) and learn about [image classification](../../tasks/classify.md) with Ultralytics YOLO.

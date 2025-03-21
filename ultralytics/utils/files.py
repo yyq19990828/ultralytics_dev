@@ -1,4 +1,4 @@
-# Ultralytics YOLO 🚀, AGPL-3.0 license
+# Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
 
 import contextlib
 import glob
@@ -18,7 +18,7 @@ class WorkingDirectory(contextlib.ContextDecorator):
     It ensures that the original working directory is restored after the context or decorated function completes.
 
     Attributes:
-        dir (Path): The new directory to switch to.
+        dir (Path | str): The new directory to switch to.
         cwd (Path): The original current working directory before the switch.
 
     Methods:
@@ -55,21 +55,21 @@ class WorkingDirectory(contextlib.ContextDecorator):
 @contextmanager
 def spaces_in_path(path):
     """
-    Context manager to handle paths with spaces in their names. If a path contains spaces, it replaces them with
-    underscores, copies the file/directory to the new path, executes the context code block, then copies the
-    file/directory back to its original location.
+    Context manager to handle paths with spaces in their names.
+
+    If a path contains spaces, it replaces them with underscores, copies the file/directory to the new path, executes
+    the context code block, then copies the file/directory back to its original location.
 
     Args:
         path (str | Path): The original path that may contain spaces.
 
     Yields:
-        (Path): Temporary path with spaces replaced by underscores if spaces were present, otherwise the original path.
+        (Path | str): Temporary path with spaces replaced by underscores if spaces were present, otherwise the original path.
 
     Examples:
-        Use the context manager to handle paths with spaces:
-        >>> from ultralytics.utils.files import spaces_in_path
         >>> with spaces_in_path('/path/with spaces') as new_path:
         >>> # Your code here
+        >>>     pass
     """
     # If path has spaces, replace them with underscores
     if " " in str(path):
@@ -106,21 +106,20 @@ def spaces_in_path(path):
 
 def increment_path(path, exist_ok=False, sep="", mkdir=False):
     """
-    Increments a file or directory path, i.e., runs/exp --> runs/exp{sep}2, runs/exp{sep}3, ... etc.
+    Increment a file or directory path, i.e., runs/exp --> runs/exp{sep}2, runs/exp{sep}3, ... etc.
 
     If the path exists and `exist_ok` is not True, the path will be incremented by appending a number and `sep` to
     the end of the path. If the path is a file, the file extension will be preserved. If the path is a directory, the
-    number will be appended directly to the end of the path. If `mkdir` is set to True, the path will be created as a
-    directory if it does not already exist.
+    number will be appended directly to the end of the path.
 
     Args:
-        path (str | pathlib.Path): Path to increment.
+        path (str | Path): Path to increment.
         exist_ok (bool): If True, the path will not be incremented and returned as-is.
         sep (str): Separator to use between the path and the incrementation number.
         mkdir (bool): Create a directory if it does not exist.
 
     Returns:
-        (pathlib.Path): Incremented path.
+        (Path): Incremented path.
 
     Examples:
         Increment a directory path:
@@ -183,9 +182,9 @@ def get_latest_run(search_dir="."):
     return max(last_list, key=os.path.getctime) if last_list else ""
 
 
-def update_models(model_names=("yolov8n.pt",), source_dir=Path("."), update_names=False):
+def update_models(model_names=("yolo11n.pt",), source_dir=Path("."), update_names=False):
     """
-    Updates and re-saves specified YOLO models in an 'updated_models' subdirectory.
+    Update and re-save specified YOLO models in an 'updated_models' subdirectory.
 
     Args:
         model_names (Tuple[str, ...]): Model filenames to update.
@@ -195,7 +194,7 @@ def update_models(model_names=("yolov8n.pt",), source_dir=Path("."), update_name
     Examples:
         Update specified YOLO models and save them in 'updated_models' subdirectory:
         >>> from ultralytics.utils.files import update_models
-        >>> model_names = ("yolov8n.pt", "yolov8s.pt")
+        >>> model_names = ("yolo11n.pt", "yolov8s.pt")
         >>> update_models(model_names, source_dir=Path("/models"), update_names=True)
     """
     from ultralytics import YOLO
@@ -219,4 +218,4 @@ def update_models(model_names=("yolov8n.pt",), source_dir=Path("."), update_name
 
         # Save model using model.save()
         print(f"Re-saving {model_name} model to {save_path}")
-        model.save(save_path, use_dill=False)
+        model.save(save_path)
