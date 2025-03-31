@@ -1,4 +1,4 @@
-# Ultralytics YOLO 🚀, AGPL-3.0 license
+# Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
 """Monkey patches to update/extend functionality of existing functions."""
 
 import time
@@ -18,7 +18,7 @@ def imread(filename: str, flags: int = cv2.IMREAD_COLOR):
 
     Args:
         filename (str): Path to the file to read.
-        flags (int, optional): Flag that can take values of cv2.IMREAD_*. Defaults to cv2.IMREAD_COLOR.
+        flags (int, optional): Flag that can take values of cv2.IMREAD_*.
 
     Returns:
         (np.ndarray): The read image.
@@ -33,7 +33,7 @@ def imwrite(filename: str, img: np.ndarray, params=None):
     Args:
         filename (str): Path to the file to write.
         img (np.ndarray): Image to write.
-        params (list of ints, optional): Additional parameters. See OpenCV documentation.
+        params (List[int], optional): Additional parameters for image encoding.
 
     Returns:
         (bool): True if the file was written, False otherwise.
@@ -47,7 +47,7 @@ def imwrite(filename: str, img: np.ndarray, params=None):
 
 def imshow(winname: str, mat: np.ndarray):
     """
-    Displays an image in the specified window.
+    Display an image in the specified window.
 
     Args:
         winname (str): Name of the window.
@@ -86,25 +86,17 @@ def torch_load(*args, **kwargs):
     return _torch_load(*args, **kwargs)
 
 
-def torch_save(*args, use_dill=True, **kwargs):
+def torch_save(*args, **kwargs):
     """
-    Optionally use dill to serialize lambda functions where pickle does not, adding robustness with 3 retries and
-    exponential standoff in case of save failure.
+    Save PyTorch objects with retry mechanism for robustness.
+
+    This function wraps torch.save with 3 retries and exponential backoff in case of save failures, which can occur
+    due to device flushing delays or antivirus scanning.
 
     Args:
-        *args (tuple): Positional arguments to pass to torch.save.
-        use_dill (bool): Whether to try using dill for serialization if available. Defaults to True.
+        *args (Any): Positional arguments to pass to torch.save.
         **kwargs (Any): Keyword arguments to pass to torch.save.
     """
-    try:
-        assert use_dill
-        import dill as pickle
-    except (AssertionError, ImportError):
-        import pickle
-
-    if "pickle_module" not in kwargs:
-        kwargs["pickle_module"] = pickle
-
     for i in range(4):  # 3 retries
         try:
             return _torch_save(*args, **kwargs)

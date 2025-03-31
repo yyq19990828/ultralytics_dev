@@ -7,7 +7,7 @@ keywords: Ultralytics, YOLO, object detection, deep learning, machine learning, 
 # ROS (Robot Operating System) quickstart guide
 
 <p align="center"> <iframe src="https://player.vimeo.com/video/639236696?h=740f412ce5" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></p>
-<p align="center"><a href="https://vimeo.com/639236696">ROS Introduction (captioned)</a> from <a href="https://vimeo.com/osrfoundation">Open Robotics</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+<p align="center"><a href="https://vimeo.com/639236696">ROS Introduction (captioned)</a> from <a href="https://vimeo.com/osrfoundation">Open Robotics</a> on <a href="https://vimeo.com/">Vimeo</a>.</p>
 
 ## What is ROS?
 
@@ -69,7 +69,7 @@ Apart from the ROS environment, you will need to install the following dependenc
 
 ## Use Ultralytics with ROS `sensor_msgs/Image`
 
-The `sensor_msgs/Image` [message type](https://docs.ros.org/en/api/sensor_msgs/html/msg/Image.html) is commonly used in ROS for representing image data. It contains fields for encoding, height, width, and pixel data, making it suitable for transmitting images captured by cameras or other sensors. Image messages are widely used in robotic applications for tasks such as visual perception, object detection, and navigation.
+The `sensor_msgs/Image` [message type](https://docs.ros.org/en/api/sensor_msgs/html/msg/Image.html) is commonly used in ROS for representing image data. It contains fields for encoding, height, width, and pixel data, making it suitable for transmitting images captured by cameras or other sensors. Image messages are widely used in robotic applications for tasks such as visual perception, [object detection](https://www.ultralytics.com/glossary/object-detection), and navigation.
 
 <p align="center">
   <img width="100%" src="https://github.com/ultralytics/docs/releases/download/0/detection-segmentation-ros-gazebo.avif" alt="Detection and Segmentation in ROS Gazebo">
@@ -88,8 +88,8 @@ import rospy
 
 from ultralytics import YOLO
 
-detection_model = YOLO("yolov8m.pt")
-segmentation_model = YOLO("yolov8m-seg.pt")
+detection_model = YOLO("yolo11m.pt")
+segmentation_model = YOLO("yolo11m-seg.pt")
 rospy.init_node("ultralytics")
 time.sleep(1)
 ```
@@ -129,7 +129,7 @@ while True:
     rospy.spin()
 ```
 
-??? Example "Complete code"
+??? example "Complete code"
 
     ```python
     import time
@@ -140,8 +140,8 @@ while True:
 
     from ultralytics import YOLO
 
-    detection_model = YOLO("yolov8m.pt")
-    segmentation_model = YOLO("yolov8m-seg.pt")
+    detection_model = YOLO("yolo11m.pt")
+    segmentation_model = YOLO("yolo11m-seg.pt")
     rospy.init_node("ultralytics")
     time.sleep(1)
 
@@ -200,7 +200,7 @@ from std_msgs.msg import String
 
 from ultralytics import YOLO
 
-detection_model = YOLO("yolov8m.pt")
+detection_model = YOLO("yolo11m.pt")
 rospy.init_node("ultralytics")
 time.sleep(1)
 classes_pub = rospy.Publisher("/ultralytics/detection/classes", String, queue_size=5)
@@ -260,7 +260,7 @@ from ultralytics import YOLO
 rospy.init_node("ultralytics")
 time.sleep(1)
 
-segmentation_model = YOLO("yolov8m-seg.pt")
+segmentation_model = YOLO("yolo11m-seg.pt")
 
 classes_pub = rospy.Publisher("/ultralytics/detection/distance", String, queue_size=5)
 ```
@@ -280,6 +280,7 @@ def callback(data):
     depth = ros_numpy.numpify(data)
     result = segmentation_model(image)
 
+    all_objects = []
     for index, cls in enumerate(result[0].boxes.cls):
         class_index = int(cls.cpu().numpy())
         name = result[0].names[class_index]
@@ -287,6 +288,7 @@ def callback(data):
         obj = depth[mask == 1]
         obj = obj[~np.isnan(obj)]
         avg_distance = np.mean(obj) if len(obj) else np.inf
+        all_objects.append(f"{name}: {avg_distance:.2f}m")
 
     classes_pub.publish(String(data=str(all_objects)))
 
@@ -297,7 +299,7 @@ while True:
     rospy.spin()
 ```
 
-??? Example "Complete code"
+??? example "Complete code"
 
     ```python
     import time
@@ -313,7 +315,7 @@ while True:
     rospy.init_node("ultralytics")
     time.sleep(1)
 
-    segmentation_model = YOLO("yolov8m-seg.pt")
+    segmentation_model = YOLO("yolo11m-seg.pt")
 
     classes_pub = rospy.Publisher("/ultralytics/detection/distance", String, queue_size=5)
 
@@ -325,6 +327,7 @@ while True:
         depth = ros_numpy.numpify(data)
         result = segmentation_model(image)
 
+        all_objects = []
         for index, cls in enumerate(result[0].boxes.cls):
             class_index = int(cls.cpu().numpy())
             name = result[0].names[class_index]
@@ -332,6 +335,7 @@ while True:
             obj = depth[mask == 1]
             obj = obj[~np.isnan(obj)]
             avg_distance = np.mean(obj) if len(obj) else np.inf
+            all_objects.append(f"{name}: {avg_distance:.2f}m")
 
         classes_pub.publish(String(data=str(all_objects)))
 
@@ -360,7 +364,7 @@ A point cloud is a collection of data points defined within a three-dimensional 
 
     Point Clouds can be obtained using various sensors:
 
-    1. **LIDAR (Light Detection and Ranging)**: Uses laser pulses to measure distances to objects and create high-precision 3D maps.
+    1. **LIDAR (Light Detection and Ranging)**: Uses laser pulses to measure distances to objects and create high-[precision](https://www.ultralytics.com/glossary/precision) 3D maps.
     2. **Depth Cameras**: Capture depth information for each pixel, allowing for 3D reconstruction of the scene.
     3. **Stereo Cameras**: Utilize two or more cameras to obtain depth information through triangulation.
     4. **Structured Light Scanners**: Project a known pattern onto a surface and measure the deformation to calculate depth.
@@ -384,7 +388,7 @@ from ultralytics import YOLO
 
 rospy.init_node("ultralytics")
 time.sleep(1)
-segmentation_model = YOLO("yolov8m-seg.pt")
+segmentation_model = YOLO("yolo11m-seg.pt")
 ```
 
 Create a function `pointcloud2_to_array`, which transforms a `sensor_msgs/PointCloud2` message into two numpy arrays. The `sensor_msgs/PointCloud2` messages contain `n` points based on the `width` and `height` of the acquired image. For instance, a `480 x 640` image will have `307,200` points. Each point includes three spatial coordinates (`xyz`) and the corresponding color in `RGB` format. These can be considered as two separate channels of information.
@@ -448,7 +452,7 @@ for index, class_id in enumerate(classes):
     o3d.visualization.draw_geometries([pcd])
 ```
 
-??? Example "Complete code"
+??? example "Complete code"
 
     ```python
     import sys
@@ -458,12 +462,13 @@ for index, class_id in enumerate(classes):
     import open3d as o3d
     import ros_numpy
     import rospy
+    from sensor_msgs.msg import PointCloud2
 
     from ultralytics import YOLO
 
     rospy.init_node("ultralytics")
     time.sleep(1)
-    segmentation_model = YOLO("yolov8m-seg.pt")
+    segmentation_model = YOLO("yolo11m-seg.pt")
 
 
     def pointcloud2_to_array(pointcloud2: PointCloud2) -> tuple:
@@ -536,7 +541,7 @@ from sensor_msgs.msg import Image
 
 from ultralytics import YOLO
 
-detection_model = YOLO("yolov8m.pt")
+detection_model = YOLO("yolo11m.pt")
 rospy.init_node("ultralytics")
 det_image_pub = rospy.Publisher("/ultralytics/detection/image", Image, queue_size=5)
 
@@ -554,7 +559,7 @@ rospy.spin()
 
 ### What are ROS topics and how are they used in Ultralytics YOLO?
 
-ROS topics facilitate communication between nodes in a ROS network by using a publish-subscribe model. A topic is a named channel that nodes use to send and receive messages asynchronously. In the context of Ultralytics YOLO, you can make a node subscribe to an image topic, process the images using YOLO for tasks like detection or segmentation, and publish outcomes to new topics.
+ROS topics facilitate communication between nodes in a ROS network by using a publish-subscribe model. A topic is a named channel that nodes use to send and receive messages asynchronously. In the context of Ultralytics YOLO, you can make a node subscribe to an image topic, process the images using YOLO for tasks like [detection](https://docs.ultralytics.com/tasks/detect/) or [segmentation](https://docs.ultralytics.com/tasks/segment/), and publish outcomes to new topics.
 
 For example, subscribe to a camera topic and process the incoming image for detection:
 
@@ -566,7 +571,7 @@ rospy.Subscriber("/camera/color/image_raw", Image, callback)
 
 Depth images in ROS, represented by `sensor_msgs/Image`, provide the distance of objects from the camera, crucial for tasks like obstacle avoidance, 3D mapping, and localization. By [using depth information](https://en.wikipedia.org/wiki/Depth_map) along with RGB images, robots can better understand their 3D environment.
 
-With YOLO, you can extract segmentation masks from RGB images and apply these masks to depth images to obtain precise 3D object information, improving the robot's ability to navigate and interact with its surroundings.
+With YOLO, you can extract [segmentation masks](https://www.ultralytics.com/glossary/image-segmentation) from RGB images and apply these masks to depth images to obtain precise 3D object information, improving the robot's ability to navigate and interact with its surroundings.
 
 ### How can I visualize 3D point clouds with YOLO in ROS?
 
@@ -576,7 +581,7 @@ To visualize 3D point clouds in ROS with YOLO:
 2. Use YOLO to segment RGB images.
 3. Apply the segmentation mask to the point cloud.
 
-Here's an example using Open3D for visualization:
+Here's an example using [Open3D](https://www.open3d.org/) for visualization:
 
 ```python
 import sys
@@ -589,7 +594,7 @@ from sensor_msgs.msg import PointCloud2
 from ultralytics import YOLO
 
 rospy.init_node("ultralytics")
-segmentation_model = YOLO("yolov8m-seg.pt")
+segmentation_model = YOLO("yolo11m-seg.pt")
 
 
 def pointcloud2_to_array(pointcloud2):
@@ -623,4 +628,4 @@ for index, class_id in enumerate(classes):
     o3d.visualization.draw_geometries([pcd])
 ```
 
-This approach provides a 3D visualization of segmented objects, useful for tasks like navigation and manipulation.
+This approach provides a 3D visualization of segmented objects, useful for tasks like navigation and manipulation in [robotics applications](https://docs.ultralytics.com/guides/steps-of-a-cv-project/).

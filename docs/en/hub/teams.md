@@ -10,15 +10,15 @@ We're excited to introduce you to the new Teams feature within [Ultralytics HUB]
 
 Here, you'll learn how to manage team members, share resources seamlessly, and collaborate efficiently on various projects.
 
-!!! note "Note"
+!!! note
 
     As this is a new feature, we're still in the process of developing and refining it to ensure it meets your needs.
 
 ## Create Team
 
-!!! note "Note"
+!!! note
 
-    You need to [upgrade](./pro.md#upgrade) to the [Pro Plan](./pro.md) in order to create a team.
+    You need to [upgrade](./pro.md#how-to-upgrade) to the [Pro Plan](./pro.md) in order to create a team.
 
     ![Ultralytics HUB screenshot of the Settings page Teams tab with an arrow pointing to the Upgrade button](https://github.com/ultralytics/docs/releases/download/0/hub-create-team-settings-page.avif)
 
@@ -56,7 +56,7 @@ Navigate to the [Teams](https://hub.ultralytics.com/settings?tab=teams) page, op
 
 ![Ultralytics HUB screenshot of the Teams page with an arrow pointing to the Delete option of one of the teams](https://github.com/ultralytics/docs/releases/download/0/hub-delete-team-option.avif)
 
-!!! warning "Warning"
+!!! warning
 
     When deleting a team, the team can't be restored.
 
@@ -72,7 +72,7 @@ Type the email and select the role of the new member and click **Invite**.
 
 ![Ultralytics HUB screenshot of the Team page with a new member invited](https://github.com/ultralytics/docs/releases/download/0/hub-invite-member-3.avif)
 
-??? tip "Tip"
+??? tip
 
     You can cancel the invite before the new member accepts it.
 
@@ -82,7 +82,7 @@ The **Pending** status disappears after the new member accepts the invite.
 
 ![Ultralytics HUB screenshot of the Team page with two members](https://github.com/ultralytics/docs/releases/download/0/team-page-two-members.avif)
 
-??? tip "Tip"
+??? tip
 
     You can update a member's role at any time.
 
@@ -98,7 +98,7 @@ When a new unique member joins one of your teams, the number of seats increases,
 
 Each unique member counts as one seat, regardless of how many teams they are in. For example, if John Doe is a member of 5 of your teams, he is using one seat.
 
-When you remove a unique member from the last team they are a member of, the number of seats decreases. The charge is prorated and can be applied to adding other unique members, paying for the [Pro Plan](./pro.md), or topping up your [account balance](./pro.md#account-balance).
+When you remove a unique member from the last team they are a member of, the number of seats decreases. The charge is prorated and can be applied to adding other unique members, paying for the [Pro Plan](./pro.md), or topping up your [account balance](./pro.md#managing-your-account-balance).
 
 You can see the number of seats on the [Teams](https://hub.ultralytics.com/settings?tab=teams) page.
 
@@ -132,7 +132,7 @@ If you don't want to join the team, click on the **Reject Invitation** button.
 
 ![Ultralytics HUB screenshot of the Team page with an arrow pointing to the Reject Invitation button](https://github.com/ultralytics/docs/releases/download/0/hub-join-team-reject-invitation.avif)
 
-??? tip "Tip"
+??? tip
 
     You can join the team directly from the [Teams](https://hub.ultralytics.com/settings?tab=teams) page.
 
@@ -158,7 +158,7 @@ That's it! Your team now has access to your dataset.
 
 ![Ultralytics HUB screenshot of the Team page with a dataset shared](https://github.com/ultralytics/docs/releases/download/0/hub-share-dataset-team-page.avif)
 
-??? tip "Tip"
+??? tip
 
     As a team owner or team admin, you can remove a shared dataset.
 
@@ -178,13 +178,13 @@ That's it! Your team now has access to your project.
 
 ![Ultralytics HUB screenshot of the Team page with a project shared](https://github.com/ultralytics/docs/releases/download/0/team-page-project-shared.avif)
 
-??? tip "Tip"
+??? tip
 
     As a team owner or team admin, you can remove a shared project.
 
     ![Ultralytics HUB screenshot of the Team page with an arrow pointing to the Remove option of one of the projects shared](https://github.com/ultralytics/docs/releases/download/0/hub-share-project-remove-option.avif)
 
-!!! note "Note"
+!!! note
 
     When you share a project with your team, all models inside the project are shared as well.
 

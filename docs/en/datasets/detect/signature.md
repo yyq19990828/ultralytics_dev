@@ -1,23 +1,31 @@
 ---
 comments: true
 description: Discover the Signature Detection Dataset for training models to identify and verify human signatures in various documents. Perfect for document verification and fraud prevention.
-keywords: Signature Detection Dataset, document verification, fraud detection, computer vision, YOLOv8, Ultralytics, annotated signatures, training dataset
+keywords: Signature Detection Dataset, document verification, fraud detection, computer vision, YOLO11, Ultralytics, annotated signatures, training dataset
 ---
 
 # Signature Detection Dataset
 
-This dataset focuses on detecting human written signatures within documents. It includes a variety of document types with annotated signatures, providing valuable insights for applications in document verification and fraud detection. Essential for training computer vision algorithms, this dataset aids in identifying signatures in various document formats, supporting research and practical applications in document analysis.
+This dataset focuses on detecting human written signatures within documents. It includes a variety of document types with annotated signatures, providing valuable insights for applications in document verification and fraud detection. Essential for training [computer vision](https://www.ultralytics.com/glossary/computer-vision-cv) algorithms, this dataset aids in identifying signatures in various document formats, supporting research and practical applications in document analysis.
 
 ## Dataset Structure
 
-The signature detection dataset is split into three subsets:
+The signature detection dataset is split into two subsets:
 
 - **Training set**: Contains 143 images, each with corresponding annotations.
 - **Validation set**: Includes 35 images, each with paired annotations.
 
 ## Applications
 
-This dataset can be applied in various computer vision tasks such as object detection, object tracking, and document analysis. Specifically, it can be used to train and evaluate models for identifying signatures in documents, which can have applications in document verification, fraud detection, and archival research. Additionally, it can serve as a valuable resource for educational purposes, enabling students and researchers to study and understand the characteristics and behaviors of signatures in different document types.
+This dataset can be applied in various computer vision tasks such as [object detection](https://www.ultralytics.com/glossary/object-detection), [object tracking](https://docs.ultralytics.com/modes/track/), and document analysis. Specifically, it can be used to train and evaluate models for identifying signatures in documents, which has significant applications in:
+
+- **Document Verification**: Automating the verification process for legal and financial documents
+- **Fraud Detection**: Identifying potentially forged or unauthorized signatures
+- **Digital Document Processing**: Streamlining workflows in administrative and legal sectors
+- **Banking and Finance**: Enhancing security in check processing and loan document verification
+- **Archival Research**: Supporting historical document analysis and cataloging
+
+Additionally, it serves as a valuable resource for educational purposes, enabling students and researchers to study signature characteristics across different document types.
 
 ## Dataset YAML
 
@@ -31,7 +39,7 @@ A YAML (Yet Another Markup Language) file defines the dataset configuration, inc
 
 ## Usage
 
-To train a YOLOv8n model on the signature detection dataset for 100 epochs with an image size of 640, use the provided code samples. For a comprehensive list of available parameters, refer to the model's [Training](../../modes/train.md) page.
+To train a YOLO11n model on the signature detection dataset for 100 [epochs](https://www.ultralytics.com/glossary/epoch) with an image size of 640, use the provided code samples. For a comprehensive list of available parameters, refer to the model's [Training](../../modes/train.md) page.
 
 !!! example "Train Example"
 
@@ -41,7 +49,7 @@ To train a YOLOv8n model on the signature detection dataset for 100 epochs with 
         from ultralytics import YOLO
 
         # Load a model
-        model = YOLO("yolov8n.pt")  # load a pretrained model (recommended for training)
+        model = YOLO("yolo11n.pt")  # load a pretrained model (recommended for training)
 
         # Train the model
         results = model.train(data="signature.yaml", epochs=100, imgsz=640)
@@ -51,7 +59,7 @@ To train a YOLOv8n model on the signature detection dataset for 100 epochs with 
 
         ```bash
         # Start training from a pretrained *.pt model
-        yolo detect train data=signature.yaml model=yolov8n.pt epochs=100 imgsz=640
+        yolo detect train data=signature.yaml model=yolo11n.pt epochs=100 imgsz=640
         ```
 
 !!! example "Inference Example"
@@ -93,11 +101,11 @@ The dataset has been released available under the [AGPL-3.0 License](https://git
 
 ### What is the Signature Detection Dataset, and how can it be used?
 
-The Signature Detection Dataset is a collection of annotated images aimed at detecting human signatures within various document types. It can be applied in computer vision tasks such as object detection and tracking, primarily for document verification, fraud detection, and archival research. This dataset helps train models to recognize signatures in different contexts, making it valuable for both research and practical applications.
+The Signature Detection Dataset is a collection of annotated images aimed at detecting human signatures within various document types. It can be applied in computer vision tasks such as [object detection](https://www.ultralytics.com/glossary/object-detection) and tracking, primarily for document verification, fraud detection, and archival research. This dataset helps train models to recognize signatures in different contexts, making it valuable for both research and practical applications in [smart document analysis](https://www.ultralytics.com/blog/using-ultralytics-yolo11-for-smart-document-analysis).
 
-### How do I train a YOLOv8n model on the Signature Detection Dataset?
+### How do I train a YOLO11n model on the Signature Detection Dataset?
 
-To train a YOLOv8n model on the Signature Detection Dataset, follow these steps:
+To train a YOLO11n model on the Signature Detection Dataset, follow these steps:
 
 1. Download the `signature.yaml` dataset configuration file from [signature.yaml](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg/datasets/signature.yaml).
 2. Use the following Python script or CLI command to start training:
@@ -110,7 +118,7 @@ To train a YOLOv8n model on the Signature Detection Dataset, follow these steps:
         from ultralytics import YOLO
 
         # Load a pretrained model
-        model = YOLO("yolov8n.pt")
+        model = YOLO("yolo11n.pt")
 
         # Train the model
         results = model.train(data="signature.yaml", epochs=100, imgsz=640)
@@ -119,7 +127,7 @@ To train a YOLOv8n model on the Signature Detection Dataset, follow these steps:
     === "CLI"
 
         ```bash
-        yolo detect train data=signature.yaml model=yolov8n.pt epochs=100 imgsz=640
+        yolo detect train data=signature.yaml model=yolo11n.pt epochs=100 imgsz=640
         ```
 
 For more details, refer to the [Training](../../modes/train.md) page.
@@ -131,7 +139,8 @@ The Signature Detection Dataset can be used for:
 1. **Document Verification**: Automatically verifying the presence and authenticity of human signatures in documents.
 2. **Fraud Detection**: Identifying forged or fraudulent signatures in legal and financial documents.
 3. **Archival Research**: Assisting historians and archivists in the digital analysis and cataloging of historical documents.
-4. **Education**: Supporting academic research and teaching in the fields of computer vision and machine learning.
+4. **Education**: Supporting academic research and teaching in the fields of computer vision and [machine learning](https://www.ultralytics.com/glossary/machine-learning-ml).
+5. **Financial Services**: Enhancing security in banking transactions and loan processing by verifying signature authenticity.
 
 ### How can I perform inference using a model trained on the Signature Detection Dataset?
 

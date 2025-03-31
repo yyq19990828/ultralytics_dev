@@ -6,29 +6,35 @@ keywords: xView dataset, overhead imagery, satellite images, object detection, h
 
 # xView Dataset
 
-The [xView](http://xviewdataset.org/) dataset is one of the largest publicly available datasets of overhead imagery, containing images from complex scenes around the world annotated using bounding boxes. The goal of the xView dataset is to accelerate progress in four computer vision frontiers:
+The [xView](http://xviewdataset.org/) dataset is one of the largest publicly available datasets of overhead imagery, containing images from complex scenes around the world annotated using bounding boxes. The goal of the xView dataset is to accelerate progress in four [computer vision](https://www.ultralytics.com/glossary/computer-vision-cv) frontiers:
 
 1. Reduce minimum resolution for detection.
 2. Improve learning efficiency.
 3. Enable discovery of more object classes.
 4. Improve detection of fine-grained classes.
 
-xView builds on the success of challenges like Common Objects in Context (COCO) and aims to leverage computer vision to analyze the growing amount of available imagery from space in order to understand the visual world in new ways and address a range of important applications.
+xView builds on the success of challenges like [Common Objects in Context (COCO)](../detect/coco.md) and aims to leverage computer vision to analyze the growing amount of available imagery from space in order to understand the visual world in new ways and address a range of important applications.
 
 ## Key Features
 
 - xView contains over 1 million object instances across 60 classes.
 - The dataset has a resolution of 0.3 meters, providing higher resolution imagery than most public satellite imagery datasets.
-- xView features a diverse collection of small, rare, fine-grained, and multi-type objects with bounding box annotation.
-- Comes with a pre-trained baseline model using the TensorFlow object detection API and an example for PyTorch.
+- xView features a diverse collection of small, rare, fine-grained, and multi-type objects with [bounding box](https://www.ultralytics.com/glossary/bounding-box) annotation.
+- Comes with a pre-trained baseline model using the [TensorFlow](https://www.ultralytics.com/glossary/tensorflow) object detection API and an example for [PyTorch](https://www.ultralytics.com/glossary/pytorch).
 
 ## Dataset Structure
 
-The xView dataset is composed of satellite images collected from WorldView-3 satellites at a 0.3m ground sample distance. It contains over 1 million objects across 60 classes in over 1,400 km² of imagery.
+The xView dataset is composed of satellite images collected from WorldView-3 satellites at a 0.3m ground sample distance. It contains over 1 million objects across 60 classes in over 1,400 km² of imagery. The dataset is particularly valuable for [remote sensing](https://www.ultralytics.com/blog/using-computer-vision-to-analyse-satellite-imagery) applications and environmental monitoring.
 
 ## Applications
 
-The xView dataset is widely used for training and evaluating deep learning models for object detection in overhead imagery. The dataset's diverse set of object classes and high-resolution imagery make it a valuable resource for researchers and practitioners in the field of computer vision, especially for satellite imagery analysis.
+The xView dataset is widely used for training and evaluating [deep learning](https://www.ultralytics.com/glossary/deep-learning-dl) models for object detection in overhead imagery. The dataset's diverse set of object classes and high-resolution imagery make it a valuable resource for researchers and practitioners in the field of computer vision, especially for satellite imagery analysis. Applications include:
+
+- Military and defense reconnaissance
+- Urban planning and development
+- Environmental monitoring
+- Disaster response and assessment
+- Infrastructure mapping and management
 
 ## Dataset YAML
 
@@ -42,7 +48,7 @@ A YAML (Yet Another Markup Language) file is used to define the dataset configur
 
 ## Usage
 
-To train a model on the xView dataset for 100 epochs with an image size of 640, you can use the following code snippets. For a comprehensive list of available arguments, refer to the model [Training](../../modes/train.md) page.
+To train a model on the xView dataset for 100 [epochs](https://www.ultralytics.com/glossary/epoch) with an image size of 640, you can use the following code snippets. For a comprehensive list of available arguments, refer to the model [Training](../../modes/train.md) page.
 
 !!! example "Train Example"
 
@@ -52,7 +58,7 @@ To train a model on the xView dataset for 100 epochs with an image size of 640, 
         from ultralytics import YOLO
 
         # Load a model
-        model = YOLO("yolov8n.pt")  # load a pretrained model (recommended for training)
+        model = YOLO("yolo11n.pt")  # load a pretrained model (recommended for training)
 
         # Train the model
         results = model.train(data="xView.yaml", epochs=100, imgsz=640)
@@ -62,7 +68,7 @@ To train a model on the xView dataset for 100 epochs with an image size of 640, 
 
         ```bash
         # Start training from a pretrained *.pt model
-        yolo detect train data=xView.yaml model=yolov8n.pt epochs=100 imgsz=640
+        yolo detect train data=xView.yaml model=yolo11n.pt epochs=100 imgsz=640
         ```
 
 ## Sample Data and Annotations
@@ -71,9 +77,17 @@ The xView dataset contains high-resolution satellite images with a diverse set o
 
 ![Dataset sample image](https://github.com/ultralytics/docs/releases/download/0/overhead-imagery-object-detection.avif)
 
-- **Overhead Imagery**: This image demonstrates an example of object detection in overhead imagery, where objects are annotated with bounding boxes. The dataset provides high-resolution satellite images to facilitate the development of models for this task.
+- **Overhead Imagery**: This image demonstrates an example of [object detection](https://www.ultralytics.com/glossary/object-detection) in overhead imagery, where objects are annotated with bounding boxes. The dataset provides high-resolution satellite images to facilitate the development of models for this task.
 
 The example showcases the variety and complexity of the data in the xView dataset and highlights the importance of high-quality satellite imagery for object detection tasks.
+
+## Related Datasets
+
+If you're working with satellite imagery, you might also be interested in exploring these related datasets:
+
+- [DOTA-v2](../obb/dota-v2.md): A dataset for oriented object detection in aerial images
+- [VisDrone](../detect/visdrone.md): A dataset for object detection and tracking in drone-captured imagery
+- [Argoverse](../detect/argoverse.md): A dataset for autonomous driving with 3D tracking annotations
 
 ## Citations and Acknowledgments
 
@@ -104,7 +118,7 @@ The [xView](http://xviewdataset.org/) dataset is one of the largest publicly ava
 
 ### How can I use Ultralytics YOLO to train a model on the xView dataset?
 
-To train a model on the xView dataset using Ultralytics YOLO, follow these steps:
+To train a model on the xView dataset using [Ultralytics YOLO](https://docs.ultralytics.com/models/yolo11/), follow these steps:
 
 !!! example "Train Example"
 
@@ -114,7 +128,7 @@ To train a model on the xView dataset using Ultralytics YOLO, follow these steps
         from ultralytics import YOLO
 
         # Load a model
-        model = YOLO("yolov8n.pt")  # load a pretrained model (recommended for training)
+        model = YOLO("yolo11n.pt")  # load a pretrained model (recommended for training)
 
         # Train the model
         results = model.train(data="xView.yaml", epochs=100, imgsz=640)
@@ -125,7 +139,7 @@ To train a model on the xView dataset using Ultralytics YOLO, follow these steps
 
         ```bash
         # Start training from a pretrained *.pt model
-        yolo detect train data=xView.yaml model=yolov8n.pt epochs=100 imgsz=640
+        yolo detect train data=xView.yaml model=yolo11n.pt epochs=100 imgsz=640
         ```
 
 For detailed arguments and settings, refer to the model [Training](../../modes/train.md) page.
@@ -137,11 +151,11 @@ The xView dataset stands out due to its comprehensive set of features:
 - Over 1 million object instances across 60 distinct classes.
 - High-resolution imagery at 0.3 meters.
 - Diverse object types including small, rare, and fine-grained objects, all annotated with bounding boxes.
-- Availability of a pre-trained baseline model and examples in TensorFlow and PyTorch.
+- Availability of a pre-trained baseline model and examples in [TensorFlow](https://www.ultralytics.com/glossary/tensorflow) and PyTorch.
 
 ### What is the dataset structure of xView, and how is it annotated?
 
-The xView dataset comprises high-resolution satellite images collected from WorldView-3 satellites at a 0.3m ground sample distance. It encompasses over 1 million objects across 60 classes in approximately 1,400 km² of imagery. Each object within the dataset is annotated with bounding boxes, making it ideal for training and evaluating deep learning models for object detection in overhead imagery. For a detailed overview, you can look at the dataset structure section [here](#dataset-structure).
+The xView dataset comprises high-resolution satellite images collected from WorldView-3 satellites at a 0.3m ground sample distance. It encompasses over 1 million objects across 60 classes in approximately 1,400 km² of imagery. Each object within the dataset is annotated with bounding boxes, making it ideal for training and evaluating [deep learning](https://www.ultralytics.com/glossary/deep-learning-dl) models for object detection in overhead imagery. For a detailed overview, you can look at the dataset structure section [here](#dataset-structure).
 
 ### How do I cite the xView dataset in my research?
 

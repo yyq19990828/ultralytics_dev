@@ -5,9 +5,9 @@ This repository provides a Rust demo for performing YOLOv8 tasks like `Classific
 ## Recently Updated
 
 - Add YOLOv8-OBB demo
-- Update ONNXRuntime to 1.17.x
+- Update ONNXRuntime to 1.19.x
 
-Newly updated YOLOv8 example code is located in this repository (https://github.com/jamjamjon/usls/tree/main/examples/yolo)
+Newly updated YOLOv8 example code is located in [this repository](https://github.com/jamjamjon/usls/tree/main/examples/yolo)
 
 ## Features
 
@@ -22,25 +22,16 @@ Newly updated YOLOv8 example code is located in this repository (https://github.
 
 Please follow the Rust official installation. (https://www.rust-lang.org/tools/install)
 
-### 2. Install ONNXRuntime
+### 2. ONNXRuntime Linking
 
-This repository use `ort` crate, which is ONNXRuntime wrapper for Rust. (https://docs.rs/ort/latest/ort/)
+- #### For detailed setup instructions, refer to the [ORT documentation](https://ort.pyke.io/setup/linking).
 
-You can follow the instruction with `ort` doc or simply do this:
-
-- step1: Download ONNXRuntime(https://github.com/microsoft/onnxruntime/releases)
-- setp2: Set environment variable `PATH` for linking.
-
-On ubuntu, You can do like this:
-
-```bash
-vim ~/.bashrc
-
-# Add the path of ONNXRUntime lib
-export LD_LIBRARY_PATH=/home/qweasd/Documents/onnxruntime-linux-x64-gpu-1.16.3/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
-
-source ~/.bashrc
-```
+- #### For Linux or macOS Users:
+  - Download the ONNX Runtime package from the [Releases page](https://github.com/microsoft/onnxruntime/releases).
+  - Set up the library path by exporting the `ORT_DYLIB_PATH` environment variable:
+    ```shell
+    export ORT_DYLIB_PATH=/path/to/onnxruntime/lib/libonnxruntime.so.1.19.0
+    ```
 
 ### 3. \[Optional\] Install CUDA & CuDNN & TensorRT
 
@@ -55,17 +46,16 @@ source ~/.bashrc
 pip install -U ultralytics
 
 # export onnx model with dynamic shapes
-yolo export model=yolov8m.pt format=onnx  simplify dynamic
-yolo export model=yolov8m-cls.pt format=onnx  simplify dynamic
-yolo export model=yolov8m-pose.pt format=onnx  simplify dynamic
-yolo export model=yolov8m-seg.pt format=onnx  simplify dynamic
-
+yolo export model=yolov8m.pt format=onnx simplify dynamic
+yolo export model=yolov8m-cls.pt format=onnx simplify dynamic
+yolo export model=yolov8m-pose.pt format=onnx simplify dynamic
+yolo export model=yolov8m-seg.pt format=onnx simplify dynamic
 
 # export onnx model with constant shapes
-yolo export model=yolov8m.pt format=onnx  simplify
-yolo export model=yolov8m-cls.pt format=onnx  simplify
-yolo export model=yolov8m-pose.pt format=onnx  simplify
-yolo export model=yolov8m-seg.pt format=onnx  simplify
+yolo export model=yolov8m.pt format=onnx simplify
+yolo export model=yolov8m-cls.pt format=onnx simplify
+yolo export model=yolov8m-pose.pt format=onnx simplify
+yolo export model=yolov8m-seg.pt format=onnx simplify
 ```
 
 ### 2. Run Inference
@@ -73,50 +63,50 @@ yolo export model=yolov8m-seg.pt format=onnx  simplify
 It will perform inference with the ONNX model on the source image.
 
 ```bash
-cargo run --release -- --model <MODEL> --source <SOURCE>
+cargo run --release -- --model MODEL --source SOURCE
 ```
 
 Set `--cuda` to use CUDA execution provider to speed up inference.
 
 ```bash
-cargo run --release -- --cuda --model <MODEL> --source <SOURCE>
+cargo run --release -- --cuda --model MODEL --source SOURCE
 ```
 
 Set `--trt` to use TensorRT execution provider, and you can set `--fp16` at the same time to use TensorRT FP16 engine.
 
 ```bash
-cargo run --release -- --trt --fp16 --model <MODEL> --source <SOURCE>
+cargo run --release -- --trt --fp16 --model MODEL --source SOURCE
 ```
 
 Set `--device_id` to select which device to run. When you have only one GPU, and you set `device_id` to 1 will not cause program panic, the `ort` would automatically fall back to `CPU` EP.
 
 ```bash
-cargo run --release -- --cuda --device_id 0 --model <MODEL> --source <SOURCE>
+cargo run --release -- --cuda --device_id 0 --model MODEL --source SOURCE
 ```
 
 Set `--batch` to do multi-batch-size inference.
 
-If you're using `--trt`, you can also set `--batch-min` and `--batch-max` to explicitly specify min/max/opt batch for dynamic batch input.(https://onnxruntime.ai/docs/execution-providers/TensorRT-ExecutionProvider.html#explicit-shape-range-for-dynamic-shape-input).(Note that the ONNX model should exported with dynamic shapes)
+If you're using `--trt`, you can also set `--batch-min` and `--batch-max` to explicitly specify min/max/opt batch for dynamic batch input.(https://onnxruntime.ai/docs/execution-providers/TensorRT-ExecutionProvider.html#explicit-shape-range-for-dynamic-shape-input).(Note that the ONNX model should be exported with dynamic shapes.)
 
 ```bash
-cargo run --release -- --cuda --batch 2 --model <MODEL> --source <SOURCE>
+cargo run --release -- --cuda --batch 2 --model MODEL --source SOURCE
 ```
 
-Set `--height` and `--width` to do dynamic image size inference. (Note that the ONNX model should exported with dynamic shapes)
+Set `--height` and `--width` to do dynamic image size inference. (Note that the ONNX model should be exported with dynamic shapes.)
 
 ```bash
-cargo run --release -- --cuda --width 480 --height 640 --model <MODEL> --source <SOURCE>
+cargo run --release -- --cuda --width 480 --height 640 --model MODEL --source SOURCE
 ```
 
 Set `--profile` to check time consumed in each stage.(Note that the model usually needs to take 1~3 times dry run to warmup. Make sure to run enough times to evaluate the result.)
 
 ```bash
-cargo run --release -- --trt --fp16 --profile --model <MODEL> --source <SOURCE>
+cargo run --release -- --trt --fp16 --profile --model MODEL --source SOURCE
 ```
 
 Results: (yolov8m.onnx, batch=1, 3 times, trt, fp16, RTX 3060Ti)
 
-```bash
+```output
 ==> 0
 [Model Preprocess]: 12.75788ms
 [ORT H2D]: 237.118µs
@@ -172,7 +162,7 @@ cargo run --release -- --model ../assets/weights/yolov8m-cls-dyn.onnx --source .
 
 You will see result like:
 
-```bash
+```output
 Summary:
 > Task: Classify (Ultralytics 8.0.217)
 > EP: Cpu
@@ -217,5 +207,5 @@ cargo run --release -- --trt --model ../assets/weights/yolov8m-pose.onnx --sourc
 using `TensorRT` EP and FP16 model `--fp16`
 
 ```bash
-cargo run --release --  --trt --fp16 --model ../assets/weights/yolov8m-seg.onnx --source ../assets/images/0172.jpg --plot
+cargo run --release -- --trt --fp16 --model ../assets/weights/yolov8m-seg.onnx --source ../assets/images/0172.jpg --plot
 ```

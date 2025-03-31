@@ -6,7 +6,7 @@ keywords: Roboflow, YOLOv5, data management, dataset labeling, dataset versionin
 
 # Roboflow Datasets
 
-You can now use Roboflow to organize, label, prepare, version, and host your datasets for training YOLOv5 🚀 models. Roboflow is free to use with YOLOv5 if you make your workspace public.
+You can now use [Roboflow](https://roboflow.com/?ref=ultralytics) to organize, label, prepare, version, and host your datasets for training Ultralytics YOLOv5 🚀 models. Roboflow is free to use with YOLOv5 if you make your workspace public.
 
 !!! question "Licensing"
 
@@ -23,22 +23,27 @@ You can upload your data to Roboflow via [web UI](https://docs.roboflow.com/addi
 
 ## Labeling
 
-After uploading data to Roboflow, you can label your data and review previous labels.
+After uploading data to Roboflow, you can label your data and review previous labels. Roboflow Annotate provides tools for efficient labeling, including model-assisted labeling to speed up your workflow.
 
 [![Roboflow Annotate](https://github.com/ultralytics/docs/releases/download/0/roboflow-annotate-1.avif)](https://roboflow.com/annotate)
 
 ## Versioning
 
-You can make versions of your dataset with different preprocessing and offline augmentation options. YOLOv5 does online augmentations natively, so be intentional when layering Roboflow's offline augmentations on top.
+You can make versions of your dataset with different preprocessing and offline augmentation options. YOLOv5 does online augmentations natively, so be intentional when layering Roboflow offline augmentations on top.
 
 ![Roboflow Preprocessing](https://github.com/ultralytics/docs/releases/download/0/roboflow-preprocessing.avif)
+
+## Dataset Management
+
+Roboflow provides robust [dataset management tools](https://docs.roboflow.com/datasets?ref=ultralytics) that help you analyze and improve your data quality before training. Use the Health Check feature to identify class imbalances, annotation inconsistencies, and other potential issues that could affect model performance.
 
 ## Exporting Data
 
 You can download your data in YOLOv5 format to quickly begin training.
 
-```
+```python
 from roboflow import Roboflow
+
 rf = Roboflow(api_key="YOUR API KEY HERE")
 project = rf.workspace().project("YOUR PROJECT")
 dataset = project.version("YOUR VERSION").download("yolov5")
@@ -52,15 +57,19 @@ We have released a custom training tutorial demonstrating all of the above capab
 
 ## Active Learning
 
-The real world is messy and your model will invariably encounter situations your dataset didn't anticipate. Using [active learning](https://blog.roboflow.com/what-is-active-learning/?ref=ultralytics) is an important strategy to iteratively improve your dataset and model. With the Roboflow and YOLOv5 integration, you can quickly make improvements on your model deployments by using a battle tested machine learning pipeline.
+The real world is messy and your model will invariably encounter situations your dataset didn't anticipate. Using [active learning](https://blog.roboflow.com/what-is-active-learning/?ref=ultralytics) is an important strategy to iteratively improve your dataset and model. With the Roboflow and YOLOv5 integration, you can quickly make improvements on your [model deployments](https://www.ultralytics.com/glossary/model-deployment) by using a battle tested [machine learning](https://www.ultralytics.com/glossary/machine-learning-ml) pipeline.
 
 <p align=""><a href="https://roboflow.com/?ref=ultralytics"><img width="1000" src="https://github.com/ultralytics/docs/releases/download/0/roboflow-active-learning.avif" alt="Roboflow active learning"></a></p>
+
+## Ultralytics HUB Integration
+
+[Ultralytics HUB](https://www.ultralytics.com/hub) supports direct integration with Roboflow, allowing you to import datasets from both [Roboflow Universe and Workspaces](https://docs.ultralytics.com/hub/integrations/). This integration streamlines the workflow from data management to model training in a single platform.
 
 ## Supported Environments
 
 Ultralytics provides a range of ready-to-use environments, each pre-installed with essential dependencies such as [CUDA](https://developer.nvidia.com/cuda-zone), [CUDNN](https://developer.nvidia.com/cudnn), [Python](https://www.python.org/), and [PyTorch](https://pytorch.org/), to kickstart your projects.
 
-- **Free GPU Notebooks**: <a href="https://bit.ly/yolov5-paperspace-notebook"><img src="https://assets.paperspace.io/img/gradient-badge.svg" alt="Run on Gradient"></a> <a href="https://colab.research.google.com/github/ultralytics/yolov5/blob/master/tutorial.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> <a href="https://www.kaggle.com/ultralytics/yolov5"><img src="https://kaggle.com/static/images/open-in-kaggle.svg" alt="Open In Kaggle"></a>
+- **Free GPU Notebooks**: <a href="https://bit.ly/yolov5-paperspace-notebook"><img src="https://assets.paperspace.io/img/gradient-badge.svg" alt="Run on Gradient"></a> <a href="https://colab.research.google.com/github/ultralytics/yolov5/blob/master/tutorial.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> <a href="https://www.kaggle.com/models/ultralytics/yolov5"><img src="https://kaggle.com/static/images/open-in-kaggle.svg" alt="Open In Kaggle"></a>
 - **Google Cloud**: [GCP Quickstart Guide](../environments/google_cloud_quickstart_tutorial.md)
 - **Amazon**: [AWS Quickstart Guide](../environments/aws_quickstart_tutorial.md)
 - **Azure**: [AzureML Quickstart Guide](../environments/azureml_quickstart_tutorial.md)
@@ -96,10 +105,10 @@ dataset = project.version("YOUR VERSION").download("yolov5")
 
 This code will download your dataset in a format compatible with YOLOv5, allowing you to quickly begin training your model. For more details, refer to the [Exporting Data](#exporting-data) section.
 
-### What is active learning and how does it work with YOLOv5 and Roboflow?
+### What is [active learning](https://www.ultralytics.com/glossary/active-learning) and how does it work with YOLOv5 and Roboflow?
 
 Active learning is a machine learning strategy that iteratively improves a model by intelligently selecting the most informative data points to label. With the Roboflow and YOLOv5 integration, you can implement active learning to continuously enhance your model's performance. This involves deploying a model, capturing new data, using the model to make predictions, and then manually verifying or correcting those predictions to further train the model. For more insights into active learning see the [Active Learning](#active-learning) section above.
 
 ### How can I use Ultralytics environments for training YOLOv5 models on different platforms?
 
-Ultralytics provides ready-to-use environments with pre-installed dependencies like CUDA, CUDNN, Python, and PyTorch, making it easier to kickstart your training projects. These environments are available on various platforms such as Google Cloud, AWS, Azure, and Docker. You can also access free GPU notebooks via [Paperspace](https://bit.ly/yolov5-paperspace-notebook), [Google Colab](https://colab.research.google.com/github/ultralytics/yolov5/blob/master/tutorial.ipynb), and [Kaggle](https://www.kaggle.com/ultralytics/yolov5). For specific setup instructions, visit the [Supported Environments](#supported-environments) section of the documentation.
+Ultralytics provides ready-to-use environments with pre-installed dependencies like CUDA, CUDNN, Python, and [PyTorch](https://www.ultralytics.com/glossary/pytorch), making it easier to kickstart your training projects. These environments are available on various platforms such as Google Cloud, AWS, Azure, and Docker. You can also access free GPU notebooks via [Paperspace](https://bit.ly/yolov5-paperspace-notebook), [Google Colab](https://colab.research.google.com/github/ultralytics/yolov5/blob/master/tutorial.ipynb), and [Kaggle](https://www.kaggle.com/models/ultralytics/yolov5). For specific setup instructions, visit the [Supported Environments](#supported-environments) section of the documentation.
