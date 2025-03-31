@@ -1,5 +1,5 @@
-import re
-from turtle import back
+# import re
+# from turtle import back
 from ultralytics.nn.tasks import BaseModel, DetectionModel, yaml_model_load, parse_model
 # Ultralytics YOLO 🚀, AGPL-3.0 license
 
@@ -90,7 +90,7 @@ from ultralytics.engine.exporter import Exporter
 
 
 class multihead(BaseModel):
-    def __init__(self, cfg_list: list, ch=3, verbose=True, pt_list: list[str]= []):  # model, input channels, number of classes
+    def __init__(self, cfg_list: list, ch=3, verbose=True, pt_list: list= []):  # model, input channels, number of classes
         """Initialize the YOLOv8 detection model with the given config and parameters."""
         super().__init__()
         # 如果cfg是list, 则加载多检测头模型
@@ -170,7 +170,7 @@ class multihead(BaseModel):
         csd = submodel.float().state_dict()
         csd = intersect_dicts(csd, submodule.state_dict(), exclude=[])  # intersect
         submodule.load_state_dict(csd, strict=False)
-        compare_sequential_modules(submodel, self.backbone, True)
+        # compare_sequential_modules(submodel, self.backbone, True)
         if verbose:
             LOGGER.info(f"Transferred {len(csd)}/{len(submodule.state_dict())} items from pretrained weights")
 
@@ -386,7 +386,7 @@ def export(
     # from .exporter import Exporter
 
     custom = {
-        "imgsz": 640,
+        "imgsz": 1024,
         "batch": 1,
         "data": None,
         "device": None,  # reset to avoid multi-GPU errors
@@ -396,11 +396,11 @@ def export(
     return Exporter(overrides=args, _callbacks=None)(model=model)
 
 if __name__ == "__main__":
-    cfg1 = '/home/tyjt/桌面/ultralytics/custom_model_config/yolov8-ghost-onlyp2.yaml'
-    cfg2 = '/home/tyjt/桌面/ultralytics/custom_model_config/yolov8-ghost-p3-p5.yaml'
-    pt1 = ''
-    pt2 = ''
-    pt3 = ''
+    cfg1 = '/workspace/飞行检测/custom_model_config/yolov8s-ghost-onlyp2.yaml'
+    cfg2 = '/workspace/飞行检测/custom_model_config/yolov8s-ghost-p3-p5.yaml'
+    pt1 = '/workspace/飞行检测/results/v8s_p2_new/0910_5cls_1024/weights/backbone_module_epoch99.pt'
+    pt2 = '/workspace/飞行检测/results/v8s_p2_new/0910_5cls_1024/weights/detect_module_epoch99_nc5.pt'
+    pt3 = '/workspace/飞行检测/results/fine_tune/0910_1cls_1024/weights/detect_module_nc1.pt'
     model = multihead(cfg_list=[cfg1, cfg2], ch=3, pt_list=[pt1, pt2, pt3])
 
     # 加载预训练权重
@@ -416,4 +416,4 @@ if __name__ == "__main__":
     # print(head_opt[0][0].shape, head_opt[1][0].shape)
     # print([x.shape for x in head_opt[0][1]])
 
-    # export(model, format="onnx")
+    export(model, format="onnx")

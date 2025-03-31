@@ -58,7 +58,7 @@ class Detect(nn.Module):
         if self.training:  # Training path
             return x
         y = self._inference(x)
-        return y if self.export else (y, x)
+        return y.transpose(1,2) if self.export else (y, x)
 
     def forward_end2end(self, x):
         """
@@ -111,6 +111,7 @@ class Detect(nn.Module):
             dbox = self.decode_bboxes(self.dfl(box), self.anchors.unsqueeze(0)) * self.strides
 
         return torch.cat((dbox, cls.sigmoid()), 1)
+        #return torch.cat((dbox, cls.sigmoid()), 1).transpose(1, 2)
 
     def bias_init(self):
         """Initialize Detect() biases, WARNING: requires stride availability."""

@@ -132,8 +132,11 @@ class CustomTrainer(DetectionTrainer):
             metric_keys = self.validator.metrics.keys + self.label_loss_items(prefix="val")
             self.metrics = dict(zip(metric_keys, [0] * len(metric_keys)))
             self.ema = ModelEMA(self.model)
+            # -----------------bug----------------
+            # 一个类别时，卡住很久
             if self.args.plots:
                 self.plot_training_labels()
+            # -----------------bug----------------
 
         # Optimizer
         self.accumulate = max(round(self.args.nbs / self.batch_size), 1)  # accumulate loss before optimizing
@@ -202,14 +205,15 @@ class CustomTrainer(DetectionTrainer):
                 detect_module_buffer)
             serialized_detect_module = detect_module_buffer.getvalue()
             # save best_submodule_epoch, i.e. 'detect_module_epoch3.pt'
-            (self.wdir / f"detect_module_epoch{self.epoch}_nc{detect.nc}.pt").write_bytes(serialized_detect_module)  #DDP模式下self.model没有nc属性
+            (self.wdir / f"detect_module_nc{detect.nc}.pt").write_bytes(serialized_detect_module)  #DDP模式下self.model没有nc属性
 
         # best_dict, _ = torch_safe_load(f"detect_module_epoch{self.epoch}.pt")
         # print(best_dict['model'])
         # print(type(best_dict))
-        # 保存最后一个子模块之前的模块
-        backbone_module_buffer = io.BytesIO()
-        if self.best_fitness == self.fitness:
+
+        # 保存最后一个子模块之前的模块,如果nc不为1，说明是多类别检测，保存backbone模块
+        if detect.nc != 1 and self.best_fitness == self.fitness:
+            backbone_module_buffer = io.BytesIO()       
             # if isinstance(self.model.backbone, CustomModel):
             torch.save({
                 'model': backbone
@@ -217,7 +221,7 @@ class CustomTrainer(DetectionTrainer):
                 backbone_module_buffer)
             serialized_backbone_module = backbone_module_buffer.getvalue()
             # save best_submodule_epoch, i.e. 'backbone_module_epoch3.pt'
-            (self.wdir / f"backbone_module_epoch{self.epoch}.pt").write_bytes(serialized_backbone_module)
+            (self.wdir / f"backbone_module.pt").write_bytes(serialized_backbone_module)
 
     
     def get_model(self, cfg=None, weights=None, verbose=True):
