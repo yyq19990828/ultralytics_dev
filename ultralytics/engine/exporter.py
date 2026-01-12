@@ -680,12 +680,12 @@ class Exporter:
         output_names = ["output0", "output1"] if self.model.task == "segment" else ["output0"]
         dynamic = self.args.dynamic
         if dynamic:
-            dynamic = {"images": {0: "batch", 2: "height", 3: "width"}}  # shape(1,3,640,640)
+            dynamic = {"images": {0: "batch"}}  # shape(1,3,640,640)
             if isinstance(self.model, SegmentationModel):
                 dynamic["output0"] = {0: "batch", 2: "anchors"}  # shape(1, 116, 8400)
                 dynamic["output1"] = {0: "batch", 2: "mask_height", 3: "mask_width"}  # shape(1,32,160,160)
             elif isinstance(self.model, DetectionModel):
-                dynamic["output0"] = {0: "batch", 2: "anchors"}  # shape(1, 84, 8400)
+                dynamic["output0"] = {0: "batch"}  # shape(1, 84, 8400)
             if self.args.nms:  # only batch size is dynamic with NMS
                 dynamic["output0"].pop(2)
         if self.args.nms and self.model.task == "obb":
